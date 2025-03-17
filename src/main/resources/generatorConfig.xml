@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD
+  Mybatis Generator Configuration 1.0//EN"
+    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <classPathEntry
+        location="src/main/kotlin/com/example/demo/build/libs">
+    <contaxt id="postgresContext" targetRuntime="MyBatis3Kotlin">
+        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPligin"/>
+        </commentGenerator>
+        <jdbcConnection>
+            driverClass="org.postgresql.Driver"
+            connectionURL="jdbc:postgresql://localhost:5432/ex-emp-api"
+            userId="postgres"
+            password="postgres"
+            <!-- <property name="nullCatalogMeansCurrent" value="true" /> // MySQLのとき必須、postgresのとき任意-->
+        </jdbcConnection>
+        <javaModelGenerator
+            targetPackage="database"
+            targetProject="src/main/kotlin/com/example/demo">
+        </javaModelGenerator>
+        <javaClientGenerator
+            targetPackage="database"
+            targetProject="src/main/kotlin/com/example/demo">
+        </javaClientGenerator>
+        <table tableName="administrators"/>
+    </contaxt>
+</generatorConfiguration>
+            

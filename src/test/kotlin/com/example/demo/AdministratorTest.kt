@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.junit.jupiter.api.Assertions.assertTrue
 
 @SpringBootTest
-class DatabaseTest {
+class AdministratorTest {
 
     @Test
     fun testConnection() {
