@@ -2,9 +2,9 @@ plugins {
 	id 'org.jetbrains.kotlin.jvm' version '1.9.25'
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
 	id 'war'
-	id 'org.springframework.boot' version '3.4.3'
+	id 'org.springframework.boot' version '3.2.3'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'com.arenagod.gradle.MybatisGenerator'
+	id 'com.arenagod.gradle.MybatisGenerator' version '1.4'
 }
 
 group = 'com.example'
@@ -24,14 +24,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
-	implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql'
-	implementation 'org.mybatis.generator:mybatis-generator-core'
-	runtimeOnly 'org.postgresql:postgresql'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.0'
+	implementation 'org.mybatis.generator:mybatis-generator-core:1.4.2'
+	runtimeOnly 'org.postgresql:postgresql:42.7.1'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.3'
 	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.1'
 }
 
 kotlin {
@@ -46,5 +46,5 @@ tasks.withType(Test) {
 
 mybatisGenerator {
 	verbose = true
-	configFile = '${projectDir}/src/main/resources"/generatorConfig.xml'
+	configFile = "${projectDir}/src/main/resources/generatorConfig.xml"
 }

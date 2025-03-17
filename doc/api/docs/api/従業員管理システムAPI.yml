@@ -1,0 +1,656 @@
+openapi: 3.0.3
+info:
+  title: "Administrator & Employee Management API"
+  description: >
+    管理者(administrators)と従業員(employees)の情報を管理するためのREST API。
+    DB接続を行い、三層構造(Controller, Service, Repository)で実装する想定。
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8081/ex-emp-api
+    description: ローカルPC
+
+paths:
+  /administrators:
+    get:
+      summary: 管理者一覧取得
+      description: 登録されている全管理者を取得します
+      responses:
+        "200":
+          description: 管理者一覧の取得に成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Administrator"
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+    post:
+      summary: 管理者登録
+      description: 新規管理者を登録します
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdministratorCreateRequest"
+      responses:
+        "201":
+          description: 登録成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Administrator"
+        "400":
+          description: リクエスト不正 (必須項目が欠落など)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  summary: "400エラー"
+                  value:
+                    status: 400
+                    message: "Bad Request"
+        "500":
+          description: サーバ内部エラー (DBエラー等)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+  /administrators/{administratorId}:
+    get:
+      summary: 管理者個別取得
+      description: 指定したIDの管理者情報を取得します
+      parameters:
+        - name: administratorId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: 管理者情報取得に成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Administrator"
+        "400":
+          description: IDの形式不正など
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  summary: "400エラー"
+                  value:
+                    status: 400
+                    message: "Bad Request"
+        "404":
+          description: 指定IDの管理者が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                notFound:
+                  summary: "404エラー"
+                  value:
+                    status: 404
+                    message: "Not Found"
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+    put:
+      summary: 管理者情報更新
+      description: 指定したIDの管理者情報を更新します
+      parameters:
+        - name: administratorId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdministratorUpdateRequest"
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Administrator"
+        "400":
+          description: リクエスト不正 (必須項目欠落など)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  summary: "400エラー"
+                  value:
+                    status: 400
+                    message: "Bad Request"
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+    delete:
+      summary: 管理者削除
+      description: 指定したIDの管理者を削除します
+      parameters:
+        - name: administratorId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: 削除成功 (レスポンスボディなし)
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+  /employees:
+    post:
+      summary: 従業員登録
+      description: 新規従業員を登録します
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeCreateRequest"
+      responses:
+        "201":
+          description: 登録成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "400":
+          description: リクエスト不正 (必須項目が欠落など)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  summary: "400エラー"
+                  value:
+                    status: 400
+                    message: "Bad Request"
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+    get:
+      summary: 従業員一覧取得 (任意)
+      description: 登録されている全従業員を取得します
+      responses:
+        "200":
+          description: 従業員一覧取得成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Employee"
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+  /employees/{employeeId}:
+    get:
+      summary: 従業員個別取得 (任意)
+      description: 指定IDの従業員情報を取得します
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: 従業員情報取得成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "400":
+          description: ID形式不正
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  summary: "400エラー"
+                  value:
+                    status: 400
+                    message: "Bad Request"
+        "404":
+          description: 指定IDの従業員が存在しない
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                notFound:
+                  summary: "404エラー"
+                  value:
+                    status: 404
+                    message: "Not Found"
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+    put:
+      summary: 従業員更新 (任意)
+      description: 指定IDの従業員情報を更新します
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeUpdateRequest"
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "400":
+          description: リクエスト不正
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  summary: "400エラー"
+                  value:
+                    status: 400
+                    message: "Bad Request"
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+    delete:
+      summary: 従業員削除 (任意)
+      description: 指定IDの従業員を削除します
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: 削除成功
+        "500":
+          description: サーバ内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: "500エラー"
+                  value:
+                    status: 500
+                    message: "Internal Server Error"
+
+components:
+  schemas:
+    Administrator:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "管理者ID(主キー)"
+          example: 1
+        name:
+          type: string
+          description: "名前"
+          example: "Taro Manager"
+        mailAddress:
+          type: string
+          format: email
+          description: "メールアドレス"
+          example: "manager@example.com"
+        password:
+          type: string
+          description: "パスワード"
+          example: "managerpass123"
+
+    AdministratorCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "名前"
+          example: "New Manager"
+        mailAddress:
+          type: string
+          format: email
+          description: "メールアドレス"
+          example: "new.manager@example.com"
+        password:
+          type: string
+          description: "パスワード"
+          example: "pass123"
+      required:
+        - name
+        - mailAddress
+        - password
+
+    AdministratorUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "名前"
+          example: "Updated Manager"
+        mailAddress:
+          type: string
+          format: email
+          description: "メールアドレス"
+          example: "updated.manager@example.com"
+        password:
+          type: string
+          description: "パスワード"
+          example: "pass456"
+      required:
+        - name
+        - mailAddress
+        - password
+
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "従業員ID"
+          example: 101
+        name:
+          type: string
+          description: "従業員名"
+          example: "Hanako Employee"
+        image:
+          type: string
+          description: "画像URL等"
+          example: "https://example.com/images/hanako.jpg"
+        gender:
+          type: string
+          description: "性別"
+          example: "female"
+        hireDate:
+          type: string
+          format: date
+          description: "入社日 (yyyy-MM-dd)"
+          example: "2025-04-01"
+        mailAddress:
+          type: string
+          format: email
+          description: "メールアドレス"
+          example: "hanako.employee@example.com"
+        zipCode:
+          type: string
+          description: "郵便番号"
+          example: "123-4567"
+        address:
+          type: string
+          description: "住所"
+          example: "東京都渋谷区…"
+        telephone:
+          type: string
+          description: "電話番号"
+          example: "03-1234-5678"
+        salary:
+          type: integer
+          description: "給料"
+          example: 300000
+        characteristics:
+          type: string
+          description: "特性"
+          example: "明るい性格"
+        dependentsCount:
+          type: integer
+          description: "扶養人数"
+          example: 2
+
+    EmployeeCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "従業員名"
+          example: "Taro Employee"
+        image:
+          type: string
+          description: "画像URL等"
+          example: "https://example.com/images/taro.jpg"
+        gender:
+          type: string
+          description: "性別"
+          example: "male"
+        hireDate:
+          type: string
+          format: date
+          description: "入社日 (yyyy-MM-dd)"
+          example: "2025-01-01"
+        mailAddress:
+          type: string
+          format: email
+          description: "メールアドレス"
+          example: "taro.employee@example.com"
+        zipCode:
+          type: string
+          description: "郵便番号"
+          example: "123-4567"
+        address:
+          type: string
+          description: "住所"
+          example: "東京都新宿区…"
+        telephone:
+          type: string
+          description: "電話番号"
+          example: "03-9876-5432"
+        salary:
+          type: integer
+          description: "給料"
+          example: 280000
+        characteristics:
+          type: string
+          description: "特性"
+          example: "社交的"
+        dependentsCount:
+          type: integer
+          description: "扶養人数"
+          example: 1
+      required:
+        - name
+        - image
+        - gender
+        - hireDate
+        - mailAddress
+        - zipCode
+        - address
+        - telephone
+        - salary
+        - characteristics
+        - dependentsCount
+
+    EmployeeUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "従業員名"
+          example: "Updated Taro"
+        image:
+          type: string
+          description: "画像URL等"
+          example: "https://example.com/images/taro-updated.jpg"
+        gender:
+          type: string
+          description: "性別"
+          example: "male"
+        hireDate:
+          type: string
+          format: date
+          description: "入社日 (yyyy-MM-dd)"
+          example: "2025-02-01"
+        mailAddress:
+          type: string
+          format: email
+          description: "メールアドレス"
+          example: "updated.taro@example.com"
+        zipCode:
+          type: string
+          description: "郵便番号"
+          example: "123-4567"
+        address:
+          type: string
+          description: "住所"
+          example: "東京都中央区…"
+        telephone:
+          type: string
+          description: "電話番号"
+          example: "03-5555-6666"
+        salary:
+          type: integer
+          description: "給料"
+          example: 320000
+        characteristics:
+          type: string
+          description: "特性"
+          example: "協調性が高い"
+        dependentsCount:
+          type: integer
+          description: "扶養人数"
+          example: 2
+      required:
+        - name
+        - image
+        - gender
+        - hireDate
+        - mailAddress
+        - zipCode
+        - address
+        - telephone
+        - salary
+        - characteristics
+        - dependentsCount
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: "HTTPステータスコード"
+          example: 400
+        message:
+          type: string
+          description: "エラー内容を示すメッセージ"
+          example: "Bad Request"
+      example:
+        status: 400
+        message: "Bad Request"
