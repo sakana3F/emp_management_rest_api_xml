@@ -18,12 +18,12 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
         <javaModelGenerator
-            targetPackage="database"
-            targetProject="src/main/kotlin/com/example/demo">
+            targetPackage="com.example.demo.database"
+            targetProject="src/main/kotlin">
         </javaModelGenerator>
         <javaClientGenerator
-            targetPackage="database"
-            targetProject="src/main/kotlin/com/example/demo">
+            targetPackage="com.example.demo.database"
+            targetProject="src/main/kotlin">
         </javaClientGenerator>
         <table tableName="administrators"/>
         <table tableName="employees"/>

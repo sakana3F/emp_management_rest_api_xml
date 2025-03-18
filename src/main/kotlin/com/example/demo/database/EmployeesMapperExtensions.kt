@@ -1,22 +1,22 @@
 /*
  * Auto-generated file. Created by MyBatis Generator
  */
-package database
+package com.example.demo.database
 
-import database.EmployeesDynamicSqlSupport.Employees
-import database.EmployeesDynamicSqlSupport.Employees.address
-import database.EmployeesDynamicSqlSupport.Employees.characteristics
-import database.EmployeesDynamicSqlSupport.Employees.dependentsCount
-import database.EmployeesDynamicSqlSupport.Employees.gender
-import database.EmployeesDynamicSqlSupport.Employees.hireDate
-import database.EmployeesDynamicSqlSupport.Employees.id
-import database.EmployeesDynamicSqlSupport.Employees.image
-import database.EmployeesDynamicSqlSupport.Employees.mailAddress
-import database.EmployeesDynamicSqlSupport.Employees.name
-import database.EmployeesDynamicSqlSupport.Employees.salary
-import database.EmployeesDynamicSqlSupport.Employees.telephone
-import database.EmployeesDynamicSqlSupport.Employees.zipCode
-import database.EmployeesRecord
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.address
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.characteristics
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.dependentsCount
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.gender
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.hireDate
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.id
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.image
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.mailAddress
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.name
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.salary
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.telephone
+import com.example.demo.database.EmployeesDynamicSqlSupport.Employees.zipCode
+import com.example.demo.database.EmployeesRecord
 import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
 import org.mybatis.dynamic.sql.util.kotlin.*
 import org.mybatis.dynamic.sql.util.kotlin.mybatis3.*

@@ -1,7 +1,7 @@
 /*
  * Auto-generated file. Created by MyBatis Generator
  */
-package database
+package com.example.demo.database
 
 import java.sql.JDBCType
 import org.mybatis.dynamic.sql.SqlTable

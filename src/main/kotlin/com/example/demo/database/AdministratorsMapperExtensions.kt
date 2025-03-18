@@ -1,14 +1,14 @@
 /*
  * Auto-generated file. Created by MyBatis Generator
  */
-package database
+package com.example.demo.database
 
-import database.AdministratorsDynamicSqlSupport.Administrators
-import database.AdministratorsDynamicSqlSupport.Administrators.id
-import database.AdministratorsDynamicSqlSupport.Administrators.mailAddress
-import database.AdministratorsDynamicSqlSupport.Administrators.name
-import database.AdministratorsDynamicSqlSupport.Administrators.password
-import database.AdministratorsRecord
+import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators
+import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.id
+import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.mailAddress
+import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.name
+import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.password
+import com.example.demo.database.AdministratorsRecord
 import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
 import org.mybatis.dynamic.sql.util.kotlin.*
 import org.mybatis.dynamic.sql.util.kotlin.mybatis3.*
