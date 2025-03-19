@@ -20,6 +20,18 @@ import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
 import org.mybatis.dynamic.sql.update.render.UpdateStatementProvider
 import org.mybatis.dynamic.sql.util.SqlProviderAdapter
 
+/*
+    administratorsテーブルへのSQL実行を担当するインターフェース
+    ・MyBatisのSQL実行インターフェース
+    ・administrators テーブルのデータを取得・登録・更新・削除する
+    ・実際のSQLはAdministratorsMapperExtensionsに記述される
+
+    [関係性]
+    １.AdministratorService でデータ操作のために利用
+    ２.AdministratorsMapperExtensions で拡張メソッドを提供
+    ３.AdministratorsRecord のデータを操作
+
+ */
 @Mapper
 interface AdministratorsMapper {
     @SelectProvider(type=SqlProviderAdapter::class, method="select")
