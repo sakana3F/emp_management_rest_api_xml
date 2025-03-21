@@ -1,8 +1,4 @@
-/*
- * Auto-generated file. Created by MyBatis Generator
- */
-package com.example.demo.database
-
+package com.example.demo.entity
 
 /*
     Administratorsテーブルと対応するデータクラス
@@ -10,10 +6,10 @@ package com.example.demo.database
     ・AdministratorsMapper を介して取得・更新・削除の対象
 
     [関係性]
-    １.AdministratorsMapperがデータベースから取得してAdministratorsRecord にマッピング
+    １.AdministratorMapperがデータベースから取得してAdministrator にマッピング
     ２.AdministratorServiceでこのクラスを使ってサービスロジックを実装
  */
-data class AdministratorsRecord(
+data class Administrator(
     var id: Int? = null,
     var name: String? = null,
     var mailAddress: String? = null,

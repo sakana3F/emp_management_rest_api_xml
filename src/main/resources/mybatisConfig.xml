@@ -3,17 +3,16 @@
     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     "http://mybatis.org/dtd/mybatis-config.dtd">
 <configuration>
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-                <property name="driver" value="org.postgresql.Driver"/>
-                <property name="url" value="jdbc:postgresql://localhost:5432/employee_testdb"/>
-                <property name="username" value="postgres"/>
-                <property name="password" value="postgres"/>
-            </dataSource>
-        </environment>
-    </environments>
+    <transactionManager type="JDBC"/>
+    <dataSource type="POOLED">
+        <property name="driver" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/ex-emp-api"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="postgres"/>
+    </dataSource>
+    <typeAliases>
+        <package name="com.example.demo.entity"/>
+    </typeAliases>
     <mappers>
         <mapper class="AdministratorsMapper"/>
         <mapper class="EmployeesMapper"/>
@@ -21,5 +20,6 @@
 </configuration>
 
 <!-- Mybatisを使用するために必要な設定クラス -->
+<!-- 今回は未使用（ymlに記入） -->
 
                 

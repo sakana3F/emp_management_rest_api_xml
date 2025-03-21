@@ -29,3 +29,6 @@
         <table tableName="employees"/>
     </context>
 </generatorConfiguration>
+
+<!-- MyBatisGeneratorを使用するときに必要 -->
+<!-- 今回未使用 -->

@@ -1,50 +1,34 @@
 package com.example.demo.service
 
 import org.springframework.stereotype.Service
+import com.example.demo.entity.Administrator
+import com.example.demo.mapper.AdministratorMapper
 import org.springframework.beans.factory.annotation.Autowired
-import org.mybatis.dynamic.sql.SqlBuilder.*
-import org.mybatis.dynamic.sql.select.render.*
-import org.mybatis.dynamic.sql.render.RenderingStrategies
-
-import com.example.demo.database.AdministratorsMapper
-import com.example.demo.database.selectByPrimaryKey
-import com.example.demo.database.AdministratorsRecord
-import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators
-import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.id
-import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.name
-import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.mailAddress
-import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.password
-
-
-@Suppress("SpringJavaInjectionPointsAutowiringInspection") // Springの依存性注入の警告を抑制
 
 @Service
 class AdministratorsService @Autowired constructor(
-    private val administratorsMapper: AdministratorsMapper
+    private val administratorMapper: AdministratorMapper
 ){
 
     // 管理者一覧を取得
-    fun findAll(): List<AdministratorsRecord> {
-        val selectStatement: SelectStatementProvider = select(id, name, mailAddress, password)
-            .from(Administrators)
-            .build()
-            .render(RenderingStrategies.MYBATIS3)
-
-        return administratorsMapper.selectMany(selectStatement)
+    fun findAll(): List<Administrator> {
+        val administrators: List<Administrator> = administratorMapper.findAll()
+            ?: throw Exception("not found administrators list")
+        return administrators
     }
 
     // ID検索から情報を取得
-    fun findById(id: Int): AdministratorsRecord {
-        val administrator: AdministratorsRecord = administratorsMapper.selectByPrimaryKey(id)
-            ?: throw Exception("not found")
+    // fun findById(id: Int): Administrator {
+    //     val administrator: Administrator = administratorMapper.findById(id)
+    //         ?: throw Exception("not found id")
 
-        // if (administrator == null) {
-        //     throw Exception
-        // }
-        // このif文は ?: throw Exception が代わりになる
+    //     // if (administrator == null) {
+    //     //     throw Exception
+    //     // }
+    //     // このif文は ?: throw Exception が代わりになる
 
-        return administrator
+    //     return administrator
 
-    }
+    // }
 
 }

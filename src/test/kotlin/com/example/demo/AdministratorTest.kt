@@ -1,7 +1,7 @@
 package com.example.demo
 
-import com.example.demo.database.AdministratorsMapper
-import com.example.demo.database.AdministratorsRecord
+import com.example.demo.mapper.AdministratorMapper
+import com.example.demo.entity.Administrator
 import com.example.demo.service.AdministratorsService
 import io.mockk.*
 import org.junit.jupiter.api.Test
@@ -49,9 +49,11 @@ class AdministratorsServiceTest {
 
     // }
 
+
+    // pgAdminに接続してテスト
     @Test
     fun `administrators cinect test`() {
-        val result: List<AdministratorsRecord> = administratorsService.findAll() 
+        val result: List<Administrator> = administratorsService.findAll() 
         // 空でないことの確認
         assertThat(result).isNotEmpty()
 
