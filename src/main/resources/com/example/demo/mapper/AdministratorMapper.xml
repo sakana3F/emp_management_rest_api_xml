@@ -12,4 +12,8 @@
     <select id="findById" parameterType="Int" resultType="Administrator">
         select id, name, mail_address, password from administrators where id = #{id}
     </select>
+    <!-- 管理者登録 -->
+    <insert id="insert" parameterType="com.example.demo.entity.Administrator" useGeneratedKeys="true" keyProperty="id">
+        insert into administrators (name, mail_address, password) values (#{name}, #{mail_address}, #{password})
+    </insert>
 </mapper>

@@ -9,4 +9,6 @@ interface AdministratorMapper{
     fun findAll(): List<Administrator>
 
     fun findById(id: Int): Administrator
+
+    fun insert(administrator: Administrator): Administrator
 }

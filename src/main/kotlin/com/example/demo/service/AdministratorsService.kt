@@ -31,4 +31,12 @@ class AdministratorsService @Autowired constructor(
 
     }
 
+    // 管理者登録
+    fun createAdministrator(admin: Administrator): Administrator {
+        val administrator: Administrator = administratorMapper.insert(admin)
+            ?: throw Exception("Internal Server Error")
+        return admin
+    }
+
+
 }

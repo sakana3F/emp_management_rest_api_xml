@@ -96,8 +96,7 @@ class AdministratorsControllerTest {
     // @Test
     // fun `GET administratorsService calltest - error`() {
     //     val testData = listOf(
-    //         Administrator(1, "管理者太郎", "admin@sample.com", "testtest"),
-    //         Administrator(2, "管理者次郎", "admin2@sample.com", "testtesttest")
+    //         Administrator("")
     //     )
     //     every { administratorMapper.findAll() } returns testData
 
