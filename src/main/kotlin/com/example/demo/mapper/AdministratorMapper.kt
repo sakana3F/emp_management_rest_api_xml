@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Param
 @Mapper
 interface AdministratorMapper{
     fun findAll(): List<Administrator>
+
+    fun findById(id: Int): Administrator
 }

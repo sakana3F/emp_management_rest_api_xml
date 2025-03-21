@@ -52,7 +52,7 @@ class AdministratorsServiceTest {
 
     // pgAdminに接続してテスト
     @Test
-    fun `administrators cinect test`() {
+    fun `administrators findAll test`() {
         val result: List<Administrator> = administratorsService.findAll() 
         // 空でないことの確認
         assertThat(result).isNotEmpty()
@@ -64,5 +64,18 @@ class AdministratorsServiceTest {
         assertThat(result[0].password).isEqualTo("testtest")
         
     }
+
+    @Test
+    fun `administrators findById test`() {
+        val result: Administrator = administratorsService.findById(1)
+
+        println(result)
+
+        assertThat(result.id).isEqualTo(1)
+        assertThat(result.name).isEqualTo("管理者太郎")
+        assertThat(result.mailAddress).isEqualTo("admin@sample.com")
+        assertThat(result.password).isEqualTo("testtest")
+    }
+
 
 }

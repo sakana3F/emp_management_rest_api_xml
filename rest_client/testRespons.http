@@ -3,4 +3,8 @@ Get http://localhost:8080/administrators HTTP/1.1
 
 ###
 
-GET  http://localhost:8080/administrators/2 HTTP/1.1
+GET http://localhost:8080/administrators/1 HTTP/1.1
+
+###
+
+GET http://localhost:8080/errorResponse HTTP/1.1

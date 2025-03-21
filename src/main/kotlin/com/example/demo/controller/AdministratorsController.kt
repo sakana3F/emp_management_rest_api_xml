@@ -2,7 +2,7 @@ package com.example.demo.controller
 
 import com.example.demo.service.AdministratorsService
 import com.example.demo.entity.Administrator
-// import com.example.demo.mapper.AdministratorMapper
+import com.example.demo.mapper.AdministratorMapper
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,15 +26,16 @@ class AdministratorsController(
         }
     }
 
-    // @GetMapping("/{id}")
-    // fun getAdministratorById(@PathVariable id: Int): ResponseEntity<AdministratorsRecord> {
+    @GetMapping("/{id}")
+    fun getAdministratorById(@PathVariable id: Int): ResponseEntity<Administrator> {
         
-    //     try{
-    //         val administrator = administratorsService.findById(id)
-    //         return ResponseEntity.ok(administrator)
-    //     } catch(e: Exception) {
-    //         return ResponseEntity.notFound().build()
-    //     }
-    // }
+        try{
+            val administrator = administratorsService.findById(id)
+            return ResponseEntity.ok(administrator)
+        } catch(e: Exception) {
+            println(e.message)
+            return ResponseEntity.notFound().build()
+        }
+    }
 
     }

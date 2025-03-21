@@ -1,8 +1,8 @@
 package com.example.demo.service
 
-import org.springframework.stereotype.Service
 import com.example.demo.entity.Administrator
 import com.example.demo.mapper.AdministratorMapper
+import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
 
 @Service
@@ -18,17 +18,17 @@ class AdministratorsService @Autowired constructor(
     }
 
     // ID検索から情報を取得
-    // fun findById(id: Int): Administrator {
-    //     val administrator: Administrator = administratorMapper.findById(id)
-    //         ?: throw Exception("not found id")
+    fun findById(id: Int): Administrator {
+        val administrator: Administrator = administratorMapper.findById(id)
+            ?: throw Exception("not found id")
 
-    //     // if (administrator == null) {
-    //     //     throw Exception
-    //     // }
-    //     // このif文は ?: throw Exception が代わりになる
+        // if (administrator == null) {
+        //     throw Exception
+        // }
+        // このif文は ?: throw Exception が代わりになる
 
-    //     return administrator
+        return administrator
 
-    // }
+    }
 
 }

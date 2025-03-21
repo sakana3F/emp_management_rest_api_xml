@@ -6,7 +6,7 @@ package com.example.demo.entity
     ・AdministratorsMapper を介して取得・更新・削除の対象
 
     [関係性]
-    １.AdministratorMapperがデータベースから取得してAdministrator にマッピング
+    １.AdministratorMapperがデータベースから取得してAdministratorにマッピング
     ２.AdministratorServiceでこのクラスを使ってサービスロジックを実装
  */
 data class Administrator(
