@@ -32,10 +32,10 @@ fun AdministratorsMapper.count(completer: CountCompleter) =
 fun AdministratorsMapper.delete(completer: DeleteCompleter) =
     deleteFrom(this::delete, Administrators, completer)
 
-// fun AdministratorsMapper.deleteByPrimaryKey(id_: Int) =
-//     delete {
-//         where(id, isEqualTo(id_))
-//     }
+fun AdministratorsMapper.deleteByPrimaryKey(id_: Int) =
+    delete {
+        where{ id.isEqualTo(id_) }
+    }
 
 fun AdministratorsMapper.insert(record: AdministratorsRecord) =
     insert(this::insert, record, Administrators) {
@@ -76,44 +76,44 @@ fun AdministratorsMapper.select(completer: SelectCompleter) =
 fun AdministratorsMapper.selectDistinct(completer: SelectCompleter) =
     selectDistinct(this::selectMany, columnList, Administrators, completer)
 
-// fun AdministratorsMapper.selectByPrimaryKey(id_: Int) =
-//     selectOne {
-//         where(id, isEqualTo(id_))
-//     }
+fun AdministratorsMapper.selectByPrimaryKey(id_: Int) =
+    selectOne {
+        where{ id.isEqualTo(id_) }
+    }
 
 // UpdateCompleter：UPDATE クエリの条件を指定するラムダ関数型
 fun AdministratorsMapper.update(completer: UpdateCompleter) =
     update(this::update, Administrators, completer)
 
 // KotlinUpdateBuilder：UPDATE クエリのカラムセットを構築するためのビルダー
-// fun KotlinUpdateBuilder.updateAllColumns(record: AdministratorsRecord) =
-//     apply {
-//         set(id).equalTo(record::id)
-//         set(name).equalTo(record::name)
-//         set(mailAddress).equalTo(record::mailAddress)
-//         set(password).equalTo(record::password)
-//     }
+fun KotlinUpdateBuilder.updateAllColumns(record: AdministratorsRecord) =
+    apply {
+        set(id).equalToWhenPresent(record::id)
+        set(name).equalToWhenPresent(record::name)
+        set(mailAddress).equalToWhenPresent(record::mailAddress)
+        set(password).equalToWhenPresent(record::password)
+    }
 
-// fun KotlinUpdateBuilder.updateSelectiveColumns(record: AdministratorsRecord) =
-//     apply {
-//         set(id).equalToWhenPresent(record::id)
-//         set(name).equalToWhenPresent(record::name)
-//         set(mailAddress).equalToWhenPresent(record::mailAddress)
-//         set(password).equalToWhenPresent(record::password)
-//     }
+fun KotlinUpdateBuilder.updateSelectiveColumns(record: AdministratorsRecord) =
+    apply {
+        set(id).equalToWhenPresent(record::id)
+        set(name).equalToWhenPresent(record::name)
+        set(mailAddress).equalToWhenPresent(record::mailAddress)
+        set(password).equalToWhenPresent(record::password)
+    }
 
-// fun AdministratorsMapper.updateByPrimaryKey(record: AdministratorsRecord) =
-//     update {
-//         set(name).equalTo(record::name)
-//         set(mailAddress).equalTo(record::mailAddress)
-//         set(password).equalTo(record::password)
-//         where(id, isEqualTo(record::id))
-//     }
+fun AdministratorsMapper.updateByPrimaryKey(record: AdministratorsRecord) =
+    update {
+        set(name).equalToWhenPresent(record::name)
+        set(mailAddress).equalToWhenPresent(record::mailAddress)
+        set(password).equalToWhenPresent(record::password)
+        where{ id.isEqualTo(requireNotNull(record.id)) }
+    }
 
-// fun AdministratorsMapper.updateByPrimaryKeySelective(record: AdministratorsRecord) =
-//     update {
-//         set(name).equalToWhenPresent(record::name)
-//         set(mailAddress).equalToWhenPresent(record::mailAddress)
-//         set(password).equalToWhenPresent(record::password)
-//         where(id, isEqualTo(record::id))
-//     }
+fun AdministratorsMapper.updateByPrimaryKeySelective(record: AdministratorsRecord) =
+    update {
+        set(name).equalToWhenPresent(record::name)
+        set(mailAddress).equalToWhenPresent(record::mailAddress)
+        set(password).equalToWhenPresent(record::password)
+        where{ id.isEqualTo(requireNotNull(record.id)) }
+    }

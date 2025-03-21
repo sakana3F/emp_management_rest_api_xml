@@ -1,0 +1,6 @@
+### 管理者一覧表示
+Get http://localhost:8080/administrators HTTP/1.1
+
+###
+
+GET  http://localhost:8080/administrators/2 HTTP/1.1

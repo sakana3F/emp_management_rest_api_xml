@@ -7,6 +7,7 @@ import org.mybatis.dynamic.sql.select.render.*
 import org.mybatis.dynamic.sql.render.RenderingStrategies
 
 import com.example.demo.database.AdministratorsMapper
+import com.example.demo.database.selectByPrimaryKey
 import com.example.demo.database.AdministratorsRecord
 import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators
 import com.example.demo.database.AdministratorsDynamicSqlSupport.Administrators.id
@@ -30,6 +31,20 @@ class AdministratorsService @Autowired constructor(
             .render(RenderingStrategies.MYBATIS3)
 
         return administratorsMapper.selectMany(selectStatement)
+    }
+
+    // ID検索から情報を取得
+    fun findById(id: Int): AdministratorsRecord {
+        val administrator: AdministratorsRecord = administratorsMapper.selectByPrimaryKey(id)
+            ?: throw Exception("not found")
+
+        // if (administrator == null) {
+        //     throw Exception
+        // }
+        // このif文は ?: throw Exception が代わりになる
+
+        return administrator
+
     }
 
 }
