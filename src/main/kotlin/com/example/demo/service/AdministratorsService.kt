@@ -32,11 +32,13 @@ class AdministratorsService @Autowired constructor(
     }
 
     // 管理者登録
-    fun createAdministrator(admin: Administrator): Administrator {
-        val administrator: Administrator = administratorMapper.insert(admin)
-            ?: throw Exception("Internal Server Error")
-        return admin
-    }
+    fun insert(admin: Administrator): Int {
+        
+        try {
+            val i = administratorMapper.insert(admin)
+        } catch (e: Exception)
+            throw e //メールの重複のときの処理（仮）
+        return i    }
 
     // 管理者削除
     fun deleteAdministratorById(id: Int): Int {

@@ -39,7 +39,7 @@ class AdministratorsController(
 
     @PostMapping // 新規登録
     fun createAdministrator(@RequestBody admin: Administrator): Administrator {
-        return administratorsService.createAdministrator(admin)
+        return administratorsService.insert(admin)
     }
 
     @DeleteMapping("/{id}") // 削除

@@ -142,7 +142,7 @@ class AdministratorsControllerTest {
 
     }
 
-    // // 管理者個別取得 - IDの形式不正など(400)
+    // 管理者個別取得 - IDの形式不正など(400)
     // @Test
     // fun `administratorsFindById test - requestError`() {
 
@@ -154,14 +154,14 @@ class AdministratorsControllerTest {
     // }
 
     // 管理者個別取得 - 指定のIDの管理者が見つからない(404)
-    // @Test
-    // fun `administratorsFindById test - foundError`() {
+    @Test
+    fun `administratorsFindById test - foundError`() {
 
-    //     mockMvc.get("/administrators/22")
-    //         .andExpect {
-    //             status { is4xxClientError() }
-    //         }
-    // }
+        mockMvc.get("/administrators/22")
+            .andExpect {
+                status { is4xxClientError() }
+            }
+    }
 
     // 管理者個別取得 - サーバー内部エラー(500)
     // @Test
@@ -175,28 +175,27 @@ class AdministratorsControllerTest {
     // }
 
     // 管理者登録 - 新規管理者の登録成功(200)
-    // @Test
-    // fun `administratorCreate - success`() {
-    //     val mockData = listOf(
-    //         Administrator(3, "New Manager" , "new.manager@example.com", "pass123")
-    //     )
-    //     every { administrator.insert("New Manager" , "new.manager@example.com", "pass123") } returns mockData
+    @Test
+    fun `administratorCreate - success`() {
+        val mockData = Administrator(3, "New Manager" , "new.manager@example.com", "pass123")
 
-    //     val expectationsJson: String = """
-    //         {    
-    //             "id": 3,
-    //             "name": "New Manager",
-    //             "mailAddress": "new.manager@example.com",
-    //             "password": "pass12"
-    //         }
-    //     """
+        every { administratorsService.insert("New Manager" , "new.manager@example.com", "pass123") } returns mockData
 
-    //     mockMvc.get("/AdministratorCreateRequest")
-    //         .andExpect {
-    //             status { isOk() }
-    //             content{ json(expectationsJson) }
-    //         }    
-    // }
+        val expectationsJson: String = """
+            {    
+                "id": 3,
+                "name": "New Manager",
+                "mailAddress": "new.manager@example.com",
+                "password": "pass12"
+            }
+        """
+
+        mockMvc.get("/AdministratorCreateRequest")
+            .andExpect {
+                status { isOk() }
+                content{ json(expectationsJson) }
+            }    
+    }
 
     // 管理者登録 - サーバ内部エラー(500)
     // @Test
