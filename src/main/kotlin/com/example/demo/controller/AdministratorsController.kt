@@ -16,7 +16,7 @@ class AdministratorsController(
     @Autowired
     val administratorsService: AdministratorsService
 ) {
-    @GetMapping("")
+    @GetMapping("") // 一覧表示
     fun getAlladministrators(): ResponseEntity<List<Administrator>> {
         val administrators = administratorsService.findAll()
         return if(administrators.isNotEmpty()) {
@@ -26,9 +26,8 @@ class AdministratorsController(
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // id検索
     fun getAdministratorById(@PathVariable id: Int): ResponseEntity<Administrator> {
-        
         try{
             val administrator = administratorsService.findById(id)
             return ResponseEntity.ok(administrator)
@@ -38,6 +37,14 @@ class AdministratorsController(
         }
     }
 
-    // @GetMapping("/{}")
+    @PostMapping // 新規登録
+    fun createAdministrator(@RequestBody admin: Administrator): Administrator {
+        return administratorsService.createAdministrator(admin)
+    }
+
+    @DeleteMapping("/{id}") // 削除
+    fun deleteAdministrator(@PathVariable id: Int) {
+        administratorsService.deleteAdministratorById(id)
+    }
 
     }

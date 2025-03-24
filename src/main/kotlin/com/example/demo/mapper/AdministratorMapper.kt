@@ -12,5 +12,5 @@ interface AdministratorMapper{
 
     fun insert(administrator: Administrator): Administrator
 
-    // fun delete(id: Int): Int
+    fun delete(id: Int): Int
 }

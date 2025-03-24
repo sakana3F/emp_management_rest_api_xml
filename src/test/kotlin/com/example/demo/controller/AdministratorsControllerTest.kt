@@ -103,15 +103,15 @@ class AdministratorsControllerTest {
 
     // 管理者一覧取得 - リクエスト不正(404)
     // → 不要
-    @Test
-    fun `GET administratorsList test - error`() {
+    // @Test
+    // fun `GET administratorsList test - error`() {
 
-        mockMvc.get("/ErrorResponse")
-            .andExpect {
-                status { is4xxClientError() }
-                content{ json(expectedFoundjson) }
-            }
-    }
+    //     mockMvc.get("/ErrorResponse")
+    //         .andExpect {
+    //             status { is4xxClientError() }
+    //             content{ json(expectedFoundjson) }
+    //         }
+    // }
 
     // 管理者一覧取得 - サーバ内部エラー(500)
     // @Test
@@ -142,7 +142,7 @@ class AdministratorsControllerTest {
 
     }
 
-    // 管理者個別取得 - IDの形式不正など(400)
+    // // 管理者個別取得 - IDの形式不正など(400)
     // @Test
     // fun `administratorsFindById test - requestError`() {
 

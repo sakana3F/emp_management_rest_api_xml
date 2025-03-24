@@ -17,7 +17,7 @@
         insert into administrators (name, mail_address, password) values (#{name}, #{mail_address}, #{password})
     </insert>
     <!-- 管理者削除 -->
-    <!-- <delete id="delete" parameterType="Int">
+    <delete id="delete" parameterType="Int">
         delete from administrators where id = #{id}
-    </delete> -->
+    </delete>
 </mapper>
