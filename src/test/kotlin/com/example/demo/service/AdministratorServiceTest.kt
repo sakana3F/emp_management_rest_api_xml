@@ -77,5 +77,17 @@ class AdministratorsServiceTest {
         assertThat(result.password).isEqualTo("testtest")
     }
 
+    // @Test
+    // fun `administrators insert test`() {
+    //     val result: Administrator = AdministratorsService.insert()
+
+    //     println(result)
+
+    // }
+
+    // @Test
+    // fun `administrators delete test`(3) {
+    //     val result: Administrator = administratorsService.delete(1)
+    // }
 
 }

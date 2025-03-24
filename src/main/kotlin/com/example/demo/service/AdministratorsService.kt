@@ -38,5 +38,10 @@ class AdministratorsService @Autowired constructor(
         return admin
     }
 
+    // 管理者削除
+    // fun deleteAdministratorById(id: Int) {
+    //     val administrator: Administrator = administratorMapper.delete(id)
+    //         ?: throw Exception("Delete Server Error")
+    // }
 
 }
