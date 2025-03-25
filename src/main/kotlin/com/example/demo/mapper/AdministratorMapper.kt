@@ -10,7 +10,7 @@ interface AdministratorMapper{
 
     fun findById(id: Int): Administrator
 
-    fun insert(administrator: Administrator): Administrator
+    fun insert(administrator: Administrator): Int
 
     fun delete(id: Int): Int
 }
