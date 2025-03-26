@@ -14,5 +14,5 @@ interface AdministratorMapper{
 
     fun delete(id: Int): Int
 
-    fun update(administrator: Administrator): Administrator
+    fun update(administrator: Administrator): Int
 }
