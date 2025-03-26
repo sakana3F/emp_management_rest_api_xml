@@ -21,4 +21,6 @@
     <delete id="delete" parameterType="Int">
         delete from administrators where id = #{id}
     </delete>
+    <!-- 管理者更新 -->
+    <!-- <update id="update"  -->
 </mapper>

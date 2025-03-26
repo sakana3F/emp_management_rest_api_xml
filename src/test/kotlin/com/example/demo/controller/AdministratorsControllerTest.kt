@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.get // Kotlin DSL
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -91,11 +92,11 @@ class AdministratorsControllerTest {
     @Test
     fun `GET administratorsList test - success`() {
 
-        val mockData = listOf(
+        val result = listOf(
             Administrator(1, "管理者太郎", "admin@sample.com", "testtest"),
             Administrator(2, "管理者次郎", "adomin2@sample.com", "testtesttest")
         )
-        every { administratorsService.findAll() } returns mockData
+        every { administratorsService.findAll() } returns result
 
         mockMvc.get("/administrators")
             .andExpect {
@@ -132,10 +133,10 @@ class AdministratorsControllerTest {
     // 管理者一覧取得 - 管理者情報取得に成功(200)
     @Test
     fun `administratorsFindById test - success`() {
-        val mockData = listOf(
+        val result = listOf(
             Administrator(1, "管理者太郎", "admin@sample.com", "testtest")
         )
-        every { administratorsService.findById(1) } returns mockData[0]
+        every { administratorsService.findById(1) } returns result[0]
     
         mockMvc.get("/administrators/1")
             .andExpect {
@@ -269,18 +270,17 @@ class AdministratorsControllerTest {
 
 
     // 管理者削除 - 削除成功 (レスポンスボディなし)
-    // @Test
-    // fun`administratorsUpdate - success`() {
-    //     val mockData = listOf(
-    //         Administrator()
-    //     )
-    //     every{ administratorsService.update() } returns mockData
+    @Test
+    fun`administratorsDelete - success`() {
+        // val request = Administrator(3, "NewManager", "new.manager@example.com", "pass12345")
+        every{ administratorsService.delete(3) } returns 1
 
-    //     mockMvc.get("/ErrorResponse")
-    //         .andExpect {
-    //             status { isOk() }
-    //         } 
-    // }
+        mockMvc.perform(
+            delete("/administrators/3"))
+            .andExpect(
+                status().isNoContent() // 削除成功・返すボディなし(204)
+            )
+    }
 
 
     // 管理者削除 - サーバ内部エラー(500)

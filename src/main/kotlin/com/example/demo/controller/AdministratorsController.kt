@@ -64,9 +64,17 @@ class AdministratorsController(
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(admin)
     }
 
+    /**
+     * 管理者削除
+     * @param deleted 削除対象者のid
+     */
     @DeleteMapping("/{id}") // 削除
-    fun deleteAdministrator(@PathVariable id: Int) {
-        administratorsService.delete(id)
+    fun deleteAdministrator(@PathVariable id: Int): ResponseEntity<Void> {
+        return if(administratorsService.delete(id) > 0) {
+            ResponseEntity.noContent().build() // 削除成功(204)
+        } else {
+            ResponseEntity.notFound().build() // 削除対象がない
+        }
     }
 
 }
