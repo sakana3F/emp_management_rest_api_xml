@@ -14,7 +14,7 @@
 
 
 // @SpringBootTest
-// class AdministratorsServiceTest {
+// class OldAdministratorsServiceTest {
 
 //     // MockKでモック作成
 //     // private lateinit var administratorsMapper: AdministratorsMapper

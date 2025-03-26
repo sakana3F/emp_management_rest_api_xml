@@ -3,6 +3,7 @@ package com.example.demo.service
 import com.example.demo.entity.Administrator
 import com.example.demo.mapper.AdministratorMapper
 import com.example.demo.dto.AdministratorCreateRequest
+import com.example.demo.dto.AdministratorUpdateRequest
 import com.example.demo.exception.GlobalExceptionHandler
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
@@ -41,8 +42,8 @@ class AdministratorsService @Autowired constructor(
     /**
      * 管理者機能の登録
      * 
-     * @param request idのない登録したい管理者丈夫尾
-     * @param adminstrator 登録したい管理者情報
+     * @param request idをまだ持ってない登録したい管理者情報
+     * @param adminstrator id自動採番後のidを持った登録したい管理者情報
      * @return 自動採番のidが入ったAdminstrater
      */
     fun insert(request: AdministratorCreateRequest): Administrator {
@@ -61,7 +62,11 @@ class AdministratorsService @Autowired constructor(
     }
 
 
-    // 管理者削除
+    /**
+     * 管理者削除
+     * @param id 削除したい管理者のid
+     * @return   削除件数
+     *  */ 
     fun delete(id: Int): Int {
         try{
             administratorMapper.delete(id)
@@ -69,6 +74,31 @@ class AdministratorsService @Autowired constructor(
             throw Exception("サーバー内部エラー(削除対象がいない)")
         }     
         return id
+    }
+
+    /**
+     * 管理者更新
+     * @param request 更新したい管理者情報
+     * @return 更新した管理者情報
+     *  */ 
+    fun update(id: Int, request: AdministratorUpdateRequest): Administrator {
+        val administrator: Administrator = Administrator()
+
+        // 更新情報を登録
+        administrator.id = id
+        administrator.name = request.name
+        administrator.mailAddress = request.mailAddress
+        administrator.password = request.password
+
+        val effected: Int = administratorMapper.update(administrator)
+
+        if(effected == 1) {
+            val administrator: Administrator = administratorMapper.findById(id)
+        } else {
+            throw NoSuchElementException("指定IDの管理者が見つからない")
+        }
+        return administrator
+
     }
 
 }
