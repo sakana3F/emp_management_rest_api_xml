@@ -1,10 +1,22 @@
 ### 管理者一覧表示
 Get http://localhost:8080/administrators HTTP/1.1
 
-###
-
+### 管理者id検索
 GET http://localhost:8080/administrators/1 HTTP/1.1
 
-###
+### 例外
+GET http://localhost:8080/administrators/10 HTTP/1.1
 
-GET http://localhost:8080/errorResponse HTTP/1.1
+### 管理者登録
+POST  http://localhost:8080/administrators HTTP/1.1
+content-type: application/json
+
+{    
+    "name": "NewManager",
+    "mailAddress": "new.manager@example.com",
+    "password": "pass12345"
+}
+
+
+### 管理者削除
+GET http://localhost:8080/administrators/3 HTTP/1.1

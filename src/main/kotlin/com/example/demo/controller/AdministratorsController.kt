@@ -4,23 +4,26 @@ import com.example.demo.service.AdministratorsService
 import com.example.demo.entity.Administrator
 import com.example.demo.mapper.AdministratorMapper
 import com.example.demo.dto.ErrorResponseDTO
+import com.example.demo.dto.AdministratorCreateRequest
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
 import org.springframework.web.bind.annotation.*
 import org.springframework.dao.DuplicateKeyException
-
+import org.springframework.validation.annotation.Validated
+import jakarta.validation.Valid
 
 
 @RestController  // SpringBootでREST APIを実装するためのアノテーション
+@Validated
+
 @RequestMapping("/administrators") // エンドポイント
 class AdministratorsController(
     @Autowired
     val administratorsService: AdministratorsService
-    // @Autowired
-    // val errorResponseDTO: ErrorResponseDTO = new Ad
 
 ) {
     @GetMapping("") // 一覧表示
@@ -56,14 +59,14 @@ class AdministratorsController(
      * @return 登録した管理者情報
      */
     @PostMapping // 新規登録
-    fun createAdministrator(@RequestBody admin: Administrator): ResponseEntity<Administrator> {
-        val admin = administratorsService.insert(admin)
-        return ResponseEntity.ok(admin)
+    fun signUpAdministrator(@RequestBody @Valid request: AdministratorCreateRequest): ResponseEntity<Administrator> {
+        val admin = administratorsService.insert(request)
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(admin)
     }
 
     @DeleteMapping("/{id}") // 削除
     fun deleteAdministrator(@PathVariable id: Int) {
-        administratorsService.deleteAdministratorById(id)
+        administratorsService.delete(id)
     }
 
-    }
+}

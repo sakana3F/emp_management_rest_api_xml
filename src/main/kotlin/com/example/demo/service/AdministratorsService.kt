@@ -2,6 +2,7 @@ package com.example.demo.service
 
 import com.example.demo.entity.Administrator
 import com.example.demo.mapper.AdministratorMapper
+import com.example.demo.dto.AdministratorCreateRequest
 import com.example.demo.exception.GlobalExceptionHandler
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
@@ -40,21 +41,28 @@ class AdministratorsService @Autowired constructor(
     /**
      * 管理者機能の登録
      * 
-     * @param admin 登録したい管理者情報
+     * @param request idのない登録したい管理者丈夫尾
+     * @param adminstrator 登録したい管理者情報
      * @return 自動採番のidが入ったAdminstrater
      */
-    fun insert(admin: Administrator): Administrator {
+    fun insert(request: AdministratorCreateRequest): Administrator {
+        val administrator: Administrator = Administrator()
+
+        administrator.name = request.name
+        administrator.mailAddress = request.mailAddress
+        administrator.password = request.password
+
         try {
-            administratorMapper.insert(admin)
+            administratorMapper.insert(administrator)
         } catch (e: DuplicateKeyException) {
             throw DuplicateKeyException("メールアドレスの重複を検知")
         }
-        return admin
+        return administrator
     }
 
 
     // 管理者削除
-    fun deleteAdministratorById(id: Int): Int {
+    fun delete(id: Int): Int {
         try{
             administratorMapper.delete(id)
         } catch(e: Exception) {
