@@ -2,7 +2,7 @@
 Get http://localhost:8080/administrators HTTP/1.1
 
 ### 管理者id検索
-GET http://localhost:8080/administrators/1 HTTP/1.1
+GET http://localhost:8080/administrators/3 HTTP/1.1
 
 ### 例外
 GET http://localhost:8080/administrators/10 HTTP/1.1
@@ -12,14 +12,14 @@ POST  http://localhost:8080/administrators HTTP/1.1
 content-type: application/json
 
 {    
-    "name": "NewManager",
-    "mailAddress": "new.manager@example.com",
-    "password": "pass12345"
+    "name": "管理者三四郎",
+    "mailAddress": "testadmin@example.com",
+    "password": "testtest34"
 }
 
 
 ### 管理者削除
-DELETE http://localhost:8080/administrators/4 HTTP/1.1
+DELETE http://localhost:8080/administrators/2 HTTP/1.1
 
 ### 管理者更新
-PUT http://localhost:8080//administrators/2 HTTP/1.1
+PUT http://localhost:8080//administrator/3 HTTP/1.1

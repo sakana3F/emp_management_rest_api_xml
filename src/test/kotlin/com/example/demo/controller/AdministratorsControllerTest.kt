@@ -46,8 +46,8 @@ class AdministratorsControllerTest {
             {
                 "id": 2,
                 "name": "管理者次郎",
-                "mailAddress": "adomin2@sample.com",
-                "password": "testtesttest"
+                "mailAddress": "jiro-admin@sample.com",
+                "password": "jiro-test"
             }
         ]
     """
@@ -94,7 +94,7 @@ class AdministratorsControllerTest {
 
         val result = listOf(
             Administrator(1, "管理者太郎", "admin@sample.com", "testtest"),
-            Administrator(2, "管理者次郎", "adomin2@sample.com", "testtesttest")
+            Administrator(2, "管理者次郎", "jiro-admin@sample.com", "jiro-test")
         )
         every { administratorsService.findAll() } returns result
 
@@ -181,25 +181,25 @@ class AdministratorsControllerTest {
     // 管理者登録 - 新規管理者の登録成功(200)
     @Test
     fun `administratorCreate - success`() {
-        val request = AdministratorCreateRequest("NewManager", "new.manager@example.com", "pass12345")
-        val registered = Administrator(3, "NewManager", "new.manager@example.com", "pass12345")
+        val request = AdministratorCreateRequest("管理者三四郎", "testadmin@example.com", "testtest34")
+        val registered = Administrator(3, "管理者三四郎", "testadmin@example.com", "testtest34")
 
         every { administratorsService.insert(request) } returns registered
 
         val jsonRequest: String = """
             {    
-                "name": "NewManager",
-                "mailAddress": "new.manager@example.com",
-                "password": "pass12345"
+                "name": "管理者三四郎",
+                "mailAddress": "testadmin@example.com",
+                "password": "testtest34"
             }
         """
 
         val expectationsJson: String = """
             {    
                 "id": 3,
-                "name": "NewManager",
-                "mailAddress": "new.manager@example.com",
-                "password": "pass12345"
+                "name": "管理者三四郎",
+                "mailAddress": "testadmin@example.com",
+                "password": "testtest34"
             }
         """
 
@@ -272,7 +272,6 @@ class AdministratorsControllerTest {
     // 管理者削除 - 削除成功 (レスポンスボディなし)
     @Test
     fun`administratorsDelete - success`() {
-        // val request = Administrator(3, "NewManager", "new.manager@example.com", "pass12345")
         every{ administratorsService.delete(3) } returns 1
 
         mockMvc.perform(

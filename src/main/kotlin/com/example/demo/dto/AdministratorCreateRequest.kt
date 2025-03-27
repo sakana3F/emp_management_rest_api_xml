@@ -15,9 +15,9 @@ data class AdministratorCreateRequest(
     val mailAddress: String,
 
     @field:NotBlank(message = "パスワードは必須です")
-    @field:Size(min = 8, message = "パスワードは6文字以上で入力")
+    @field:Size(min = 6, message = "パスワードは6文字以上で入力")
     // @field:Pattern(
-    //     regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@._-]+@[A-Za-z\\d.-]+\\.[A-Za-z]{2,}$",
+    //     regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@._-]+@[A-Za-z\\d.-]+\\.[A-Za-z]$",
     //     message = "メールアドレスは英字と数字を含める必要があります"
     //     )
     @field:JsonProperty("password", required = true)

@@ -20,7 +20,6 @@ import jakarta.validation.Valid
 
 @RestController  // SpringBootでREST APIを実装するためのアノテーション
 @Validated
-
 @RequestMapping("/administrators") // エンドポイント
 class AdministratorsController(
     @Autowired
@@ -59,7 +58,7 @@ class AdministratorsController(
      * @param admin 新規登録する管理者情報
      * @return 登録した管理者情報
      */
-    @PostMapping // 新規登録
+    @PostMapping("") // 新規登録
     fun signUpAdministrator(@RequestBody @Valid request: AdministratorCreateRequest): ResponseEntity<Administrator> {
         val admin = administratorsService.insert(request)
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(admin)
@@ -73,7 +72,6 @@ class AdministratorsController(
     fun deleteAdministrator(@PathVariable id: Int): ResponseEntity<Void> {
         val effected = administratorsService.delete(id)
         return ResponseEntity.noContent().build() // 削除成功(204)
-
     }
 
     /**
@@ -81,7 +79,7 @@ class AdministratorsController(
      * @param  update 更新する管理者情報
      * @return        更新後の管理者情報
      */
-    @PostMapping // 更新
+    @PutMapping("/{Id}") // 更新
     fun updateAdministrator(@RequestBody @Valid id: Int, request: AdministratorUpdateRequest): ResponseEntity<Administrator> {
         val admin = administratorsService.update(id, request)
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(admin)
