@@ -79,10 +79,11 @@ class AdministratorsController(
      * @param  update 更新する管理者情報
      * @return        更新後の管理者情報
      */
-    @PutMapping("/{Id}") // 更新
-    fun updateAdministrator(@RequestBody @Valid id: Int, request: AdministratorUpdateRequest): ResponseEntity<Administrator> {
+    @PutMapping("/{id}") // 更新
+    fun updateAdministrator(@PathVariable id: Int, @RequestBody @Valid request: AdministratorUpdateRequest): ResponseEntity<Administrator> {
         val admin = administratorsService.update(id, request)
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(admin)
+        println(admin)
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(admin)
     }
      
 

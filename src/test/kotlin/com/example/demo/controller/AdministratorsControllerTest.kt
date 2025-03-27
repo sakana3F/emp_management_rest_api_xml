@@ -4,6 +4,7 @@ import com.example.demo.entity.Administrator
 import com.example.demo.service.AdministratorsService
 import com.example.demo.controller.AdministratorsController
 import com.example.demo.dto.AdministratorCreateRequest
+import com.example.demo.dto.AdministratorUpdateRequest
 import io.mockk.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -237,38 +239,6 @@ class AdministratorsControllerTest {
     //         }    
     // }
 
-    // 管理者更新 - 成功(200)
-    // @Test
-    // fun`administratorsUpdate - success`() {
-    //     val mockData = listOf(
-    //         Administrator(3, "Updated Manager" , "updated.manager@example.com", "pass456")
-    //     )
-    //     every{ administratorsService.update(3, "Updated Manager" , "updated.manager@example.com", "pass456") } returns mockData
-
-    //     val expectationsJson: String = """
-    //         {    
-    //             "id": 3,
-    //             "name": "Updated Manager",
-    //             "mailAddress": "updated.manager@example.com",
-    //             "password": "pass456"
-    //         }
-    //     """
-
-    //     mockMvc.get("/ErrorResponse")
-    //         .andExpect {
-    //             status { isOk() }
-    //             content{ json(expectationsJson) }
-    //         } 
-    // }
-
-
-
-    // 管理者更新 - リクエスト不正(400)
-
-
-    // 管理者更新 - サーバ内部エラー(500)
-
-
     // 管理者削除 - 削除成功 (レスポンスボディなし)
     @Test
     fun`administratorsDelete - success`() {
@@ -281,10 +251,53 @@ class AdministratorsControllerTest {
             )
     }
 
-
     // 管理者削除 - サーバ内部エラー(500)
 
 
+    // 管理者更新 - 成功(200)
+    @Test
+    fun`administratorUpdate - success`() {
+
+        val request = AdministratorUpdateRequest("管理者さんしろう", "update_test@sample.com", "testtest345")
+        val effected = Administrator(3, "管理者さんしろう", "update_test@sample.com", "testtest345")
+
+        every{ administratorsService.update(3, request) } returns effected
+
+        val jsonRequest: String = """
+            {    
+                "name": "管理者さんしろう",
+                "mailAddress": "update_test@sample.com",
+                "password": "testtest345"
+            }
+        """
+
+        val expectationsJson: String = """
+            {    
+                "id": 3,
+                "name": "管理者さんしろう",
+                "mailAddress": "update_test@sample.com",
+                "password": "testtest345"
+            }
+        """
+
+        mockMvc.perform(
+            // action
+            put("/administrators/3")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest)
+        )
+            // assartion
+            .andExpect(
+                status().isOk() // 更新成功
+            )
+            .andExpect(
+                content().json(expectationsJson) // 更新後のjsonチェック
+            )
+    }
+    // 管理者更新 - リクエスト不正(400)
+
+
+    // 管理者更新 - サーバ内部エラー(500)
         
 
 }

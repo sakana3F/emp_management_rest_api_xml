@@ -32,11 +32,11 @@ class AdministratorsServicetTest {
     @Test
     fun `administrator Update Test - success`() {
 
-        // 更新したい管理者情報
+        // 更新したい(後)管理者情報
         val request = AdministratorUpdateRequest(
-            name = "テスト管理者一郎",
-            mailAddress = "test2@example.com",
-            password = "testpass"
+            name = "管理者さんしろう",
+            mailAddress = "update_test@sample.com",
+            password = "testtest345"
         )
 
         // 管理者情報の更新作業
@@ -51,7 +51,7 @@ class AdministratorsServicetTest {
         val effected = administratorsService.update(3, request)
 
         // requestで指定した管理者情報と更新したい内容が同じになっているかの確認(今回はnameだけあってればあってると判断)
-        assertThat(effected.name).isEqualTo("テスト管理者一郎")
+        assertThat(effected.name).isEqualTo("管理者さんしろう")
 
         // MapperのupdateとfindByIdが指定通りに呼び出されているかの確認
         verify() { administratorMapper.update(effect) }

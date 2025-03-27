@@ -22,4 +22,4 @@ content-type: application/json
 DELETE http://localhost:8080/administrators/2 HTTP/1.1
 
 ### 管理者更新
-PUT http://localhost:8080//administrator/3 HTTP/1.1
+PUT http://localhost:8080/administrators/3 HTTP/1.1

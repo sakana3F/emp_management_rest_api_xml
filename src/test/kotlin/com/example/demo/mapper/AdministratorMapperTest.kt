@@ -34,7 +34,7 @@ class AdministratorMapperTest {
     
     @Test
     fun testUpdate() {
-        val administrator = Administrator(3, "管理者三四郎", "testadmin@sample.com", "testtest34")
+        val administrator = Administrator(3, "管理者さんしろう", "update_test@sample.com", "testtest345")
         val effected: Int = administratorMapper.update(administrator)
         assertEquals(1, effected)
     }
