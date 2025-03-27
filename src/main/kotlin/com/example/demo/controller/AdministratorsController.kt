@@ -5,6 +5,7 @@ import com.example.demo.entity.Administrator
 import com.example.demo.mapper.AdministratorMapper
 import com.example.demo.dto.ErrorResponseDTO
 import com.example.demo.dto.AdministratorCreateRequest
+import com.example.demo.dto.AdministratorUpdateRequest
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.beans.factory.annotation.Autowired
@@ -70,11 +71,21 @@ class AdministratorsController(
      */
     @DeleteMapping("/{id}") // 削除
     fun deleteAdministrator(@PathVariable id: Int): ResponseEntity<Void> {
-        return if(administratorsService.delete(id) > 0) {
-            ResponseEntity.noContent().build() // 削除成功(204)
-        } else {
-            ResponseEntity.notFound().build() // 削除対象がない
-        }
+        val effected = administratorsService.delete(id)
+        return ResponseEntity.noContent().build() // 削除成功(204)
+
     }
+
+    /**
+     * 管理者情報の更新
+     * @param  update 更新する管理者情報
+     * @return        更新後の管理者情報
+     */
+    @PostMapping // 更新
+    fun updateAdministrator(@RequestBody @Valid id: Int, request: AdministratorUpdateRequest): ResponseEntity<Administrator> {
+        val admin = administratorsService.update(id, request)
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(admin)
+    }
+     
 
 }

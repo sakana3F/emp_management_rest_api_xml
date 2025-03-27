@@ -14,14 +14,24 @@ class AdministratorsService @Autowired constructor(
     private val administratorMapper: AdministratorMapper
 ){
 
-    // 管理者一覧を取得
+    /**
+     * 管理者一覧を取得
+     * @param administrators 登録済みの管理者情報取得
+     * @administrators       管理者情報一覧
+     * 
+     *  */ 
     fun findAll(): List<Administrator> {
         val administrators: List<Administrator> = administratorMapper.findAll()
 
         return administrators
     }
 
-    // ID検索から情報を取得
+    /**
+     * ID検索から情報を取得
+     * @param  id 管理者id
+     * @return    idが紐づいた管理者情報
+     * 
+     *  */ 
     fun findById(id: Int): Administrator {
         val administrator: Administrator
         
@@ -42,9 +52,9 @@ class AdministratorsService @Autowired constructor(
     /**
      * 管理者機能の登録
      * 
-     * @param request idをまだ持ってない登録したい管理者情報
+     * @param request      idをまだ持ってない登録したい管理者情報
      * @param adminstrator id自動採番後のidを持った登録したい管理者情報
-     * @return 自動採番のidが入ったAdminstrater
+     * @return             自動採番のidが入ったAdminstrater
      */
     fun insert(request: AdministratorCreateRequest): Administrator {
         val administrator: Administrator = Administrator()
@@ -70,8 +80,8 @@ class AdministratorsService @Autowired constructor(
     fun delete(id: Int): Int {
         try{
             administratorMapper.delete(id)
-        } catch(e: Exception) {
-            throw Exception("サーバー内部エラー(削除対象がいない)")
+        } catch(e: NoSuchElementException) {
+            throw NoSuchElementException("サーバー内部エラー(削除対象がいない)")
         }     
         return id
     }
@@ -98,7 +108,6 @@ class AdministratorsService @Autowired constructor(
             throw NoSuchElementException("指定IDの管理者が見つからない")
         }
         return administrator
-
     }
 
 }
