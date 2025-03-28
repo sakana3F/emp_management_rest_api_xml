@@ -233,9 +233,6 @@ class AdministratorsControllerTest {
             )
     }
 
-    // 管理者削除 - サーバ内部エラー(500)
-
-
     /**
      * 管理者更新 - 成功(200)
      * 
@@ -279,10 +276,4 @@ class AdministratorsControllerTest {
                 content().json(expectationsJson) // 更新後のjsonチェック
             )
     }
-    // 管理者更新 - リクエスト不正(400)
-
-
-    // 管理者更新 - サーバ内部エラー(500)
-        
-
 }
