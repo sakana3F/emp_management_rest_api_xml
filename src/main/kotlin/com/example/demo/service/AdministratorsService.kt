@@ -5,6 +5,7 @@ import com.example.demo.mapper.AdministratorMapper
 import com.example.demo.dto.AdministratorCreateRequest
 import com.example.demo.dto.AdministratorUpdateRequest
 import com.example.demo.exception.GlobalExceptionHandler
+import com.example.demo.exception.BadRequestExeption
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DuplicateKeyException
@@ -33,19 +34,15 @@ class AdministratorsService @Autowired constructor(
      * 
      *  */ 
     fun findById(id: Int): Administrator {
-        val administrator: Administrator
-        
-        try{
-            administrator = administratorMapper.findById(id)
-        } catch(e: NoSuchElementException) {
-            throw NoSuchElementException("指定IDの管理者が見つからない")
-        }
-        return administrator
-        
-        // if (administrator == null) {
-        //     throw Exception
+        return administratorMapper.findById(id)        
+            ?: throw NoSuchElementException("指定IDの管理者が見つからない(id=$id)")
+
+        // try{
+        //     administrator = administratorMapper.findById(id)
+        // } catch(e: NoSuchElementException) {
+        //     throw NoSuchElementException("指定IDの管理者が見つからない")
         // }
-        // このif文は ?: throw Exception が代わりになる
+        // return 
     }
 
 
@@ -104,8 +101,9 @@ class AdministratorsService @Autowired constructor(
 
         if(effected == 1) {
             val administrator: Administrator = administratorMapper.findById(id)
+                ?: throw NoSuchElementException("指定IDの管理者が見つからない(id=$id)") //nullの場合NoSuchElementExceptionのエラーを出す
         } else {
-            throw NoSuchElementException("指定IDの管理者が見つからない")
+            throw BadRequestExeption("指定IDの管理者が見つからない")  // idリクエストが間違ってるとき
         }
         return administrator
     }

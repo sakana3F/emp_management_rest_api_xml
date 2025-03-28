@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.jdbc.Sql
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -28,6 +30,11 @@ import org.springframework.http.MediaType
 
 
 @SpringBootTest
+@ActiveProfiles("test")
+@Sql(
+    scripts = ["/schema.sql", "/data.sql"],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+)
 @AutoConfigureMockMvc
 class AdministratorsControllerTest {
 
@@ -106,31 +113,6 @@ class AdministratorsControllerTest {
                 content { json(expectationsListJson) }
             }
     }
-
-    // 管理者一覧取得 - リクエスト不正(404)
-    // → 不要
-    // @Test
-    // fun `GET administratorsList test - error`() {
-
-    //     mockMvc.get("/ErrorResponse")
-    //         .andExpect {
-    //             status { is4xxClientError() }
-    //             content{ json(expectedFoundjson) }
-    //         }
-    // }
-
-    // 管理者一覧取得 - サーバ内部エラー(500)
-    // @Test
-    // fun `Server internal error`() {
-    //     
-    //     mockMvc.get("/ErrorResponse")
-    //         .andExpect {
-    //             status { is5xxServerError() }
-    //         }
-    //         .andExpect{
-    //             content().json(serverError)
-    //         }    
-    // }
 
     // 管理者一覧取得 - 管理者情報取得に成功(200)
     @Test
@@ -254,7 +236,10 @@ class AdministratorsControllerTest {
     // 管理者削除 - サーバ内部エラー(500)
 
 
-    // 管理者更新 - 成功(200)
+    /**
+     * 管理者更新 - 成功(200)
+     * 
+     *  */ 
     @Test
     fun`administratorUpdate - success`() {
 

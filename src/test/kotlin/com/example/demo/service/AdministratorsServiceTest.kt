@@ -8,14 +8,19 @@ import io.mockk.*
 import org.springframework.boot.test.context.SpringBootTest
 import com.ninjasquad.springmockk.MockkBean
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.jdbc.Sql
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
 
+
+@ActiveProfiles("test")
+@Sql(
+    scripts = ["/schema.sql", "/data.sql"],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+)
 @SpringBootTest
 class AdministratorsServicetTest {
-
-    // @Autowired
-    // private lateinit var mockMvc: MockMvc
 
     @MockkBean
     private lateinit var administratorMapper: AdministratorMapper

@@ -19,7 +19,7 @@ import jakarta.validation.Valid
 
 
 @RestController  // SpringBootでREST APIを実装するためのアノテーション
-@Validated
+// @Validated
 @RequestMapping("/administrators") // エンドポイント
 class AdministratorsController(
     @Autowired
@@ -29,11 +29,8 @@ class AdministratorsController(
     @GetMapping("") // 一覧表示
     fun getAlladministrators(): ResponseEntity<List<Administrator>> {
         val administrators = administratorsService.findAll()
-        return if(administrators.isNotEmpty()) {
-            ResponseEntity.ok(administrators)
-        } else {
-            ResponseEntity.noContent().build()
-        }
+        return ResponseEntity.ok(administrators)  // 空の一覧も返す（エラーなし）
+        
     }
 
     /**
@@ -41,16 +38,10 @@ class AdministratorsController(
      * @param id 取得したい管理者のid
      * @return Administrator 管理者情報
      */
-
     @GetMapping("/{id}") 
     fun getAdministratorById(@PathVariable id: Int): ResponseEntity<Administrator> {
-        try{
             val administrator = administratorsService.findById(id)
             return ResponseEntity.ok(administrator)
-        } catch(e: Exception) {
-            println(e.message)
-            return ResponseEntity.notFound().build()
-        }
     }
 
     /**
@@ -82,7 +73,6 @@ class AdministratorsController(
     @PutMapping("/{id}") // 更新
     fun updateAdministrator(@PathVariable id: Int, @RequestBody @Valid request: AdministratorUpdateRequest): ResponseEntity<Administrator> {
         val admin = administratorsService.update(id, request)
-        println(admin)
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(admin)
     }
      

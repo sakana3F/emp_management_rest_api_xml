@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.jdbc.Sql
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -27,6 +29,11 @@ import org.springframework.http.MediaType
 import kotlin.test.assertEquals
 
 @SpringBootTest
+@ActiveProfiles("test")
+@Sql(
+    scripts = ["/schema.sql", "/data.sql"],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+)
 class AdministratorMapperTest {
 
     @Autowired
@@ -37,6 +44,6 @@ class AdministratorMapperTest {
         val administrator = Administrator(3, "管理者さんしろう", "update_test@sample.com", "testtest345")
         val effected: Int = administratorMapper.update(administrator)
         assertEquals(1, effected)
-    }
+    }   
 
 }

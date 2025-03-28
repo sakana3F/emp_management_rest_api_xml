@@ -28,16 +28,14 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.0'
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // バリデーション
-	// implementation 'jakarta.validation:jakarta.validation-api:3.1.0' // バリデーション
-	// implementation 'org.mybatis.generator:mybatis-generator-core:1.4.2'
 	runtimeOnly 'org.postgresql:postgresql:42.7.1'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.3'
 	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.1'
-	// testImplementation 'io.mockk:mockk:1.13.17'
 	testImplementation 'com.ninja-squad:springmockk:4.0.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
+	testImplementation 'com.h2database:h2'  // テスト用DB
 }
 
 kotlin {

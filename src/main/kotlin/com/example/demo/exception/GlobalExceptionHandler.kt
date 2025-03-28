@@ -1,5 +1,6 @@
 package com.example.demo.exception
 
+import com.example.demo.exception.BadRequestExeption
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.servlet.NoHandlerFoundException
@@ -24,8 +25,10 @@ class GlobalExceptionHandler {
      * 400エラー
      */
     @ExceptionHandler(
-        DuplicateKeyException::class // メールアドレスの重複確認
-        // MethodArgumentNotValidException::class // バリデーションに引っかかったとき
+        DuplicateKeyException::class, // メールアドレスの重複確認
+        BadRequestExeption::class,    // idのリクエストが間違っているとき
+        MethodArgumentTypeMismatchException::class, //id不正形
+        MethodArgumentNotValidException::class // バリデーションに引っかかったとき
     )
     fun handleBadRequest(): ResponseEntity<ErrorResponseDTO> =
         ResponseEntity
