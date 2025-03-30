@@ -12,6 +12,7 @@ import com.ninjasquad.springmockk.MockkBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.jdbc.Sql
+import org.springframework.dao.DuplicateKeyException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.assertj.core.api.Assertions.assertThat
@@ -88,7 +89,7 @@ class AdministratorsServicetTest {
     }
 
     /**
-     * 管理者情報の登録
+     * 管理者情報の登録 - 成功
      * @param request  新規登録情報
      * @param expected 新規登録する情報をAdministratorに格納
      * @param result   新規登録された情報
@@ -130,16 +131,60 @@ class AdministratorsServicetTest {
     }
 
     /**
-     * 管理者削除
-     * @param result id=2の管理者削除
+     * 管理者所法の登録 - 失敗
+     * @param request     mailAddressの重複した管理者
+     * @param duplication mailAddressの重複でエラーが投げられることを期待
+     */
+    @Test
+    fun `administrators duplicationInsert Test - exception_Bad Request`() {
+        val request = AdministratorCreateRequest("管理者太郎", "admin@sample.com", "testtest")
+        
+        val duplication = Administrator(
+            name = request.name,
+            mailAddress = request.mailAddress,
+            password = request.password
+        )
+
+        every { administratorMapper.insert(duplication) } throws DuplicateKeyException("メールアドレスの重複を検知")
+
+        // 例外が投げられることを検証
+        val exception = assertThrows<DuplicateKeyException> {
+            administratorsService.insert(request)
+        }
+
+        // エラーメッセージの確認
+        assertEquals("メールアドレスの重複を検知", exception.message)
+
+        verify(exactly = 1) { administratorMapper.insert(duplication) }
+    }
+
+
+    /**
+     * 管理者削除 - 成功
+     * @param expected id=2の管理者削除
      */
     @Test
     fun `administrator delete Test - success`() {
         every { administratorMapper.delete(2) } returns 1
 
-        val result = administratorsService.delete(2)
+        val expected = administratorsService.delete(2)
 
-        assertEquals(2, result)
+        assertEquals(2, expected)
+    }
+
+    /**
+     * 管理者削除 - 失敗
+     * @param exception 削除対象がいないときにNoSuchElementExceptionのエラーを投げる
+     */
+    @Test
+    fun `administrator delete Test - exception_not found`() {
+        every { administratorMapper.delete(99) } throws NoSuchElementException()
+
+        val exception = assertThrows<NoSuchElementException> {
+            administratorsService.delete(99)
+        }
+
+        assertEquals("サーバー内部エラー(削除対象がいない)", exception.message)
     }
 
     /**

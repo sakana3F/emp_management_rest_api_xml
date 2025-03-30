@@ -48,7 +48,6 @@ class AdministratorsService @Autowired constructor(
 
     /**
      * 管理者機能の登録
-     * 
      * @param request      idをまだ持ってない登録したい管理者情報
      * @param adminstrator id自動採番後のidを持った登録したい管理者情報
      * @return             自動採番のidが入ったAdminstrater
@@ -67,7 +66,6 @@ class AdministratorsService @Autowired constructor(
         }
         return administrator
     }
-
 
     /**
      * 管理者削除
