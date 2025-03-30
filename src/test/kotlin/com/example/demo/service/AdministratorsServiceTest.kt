@@ -4,6 +4,7 @@ import com.example.demo.entity.Administrator
 import com.example.demo.mapper.AdministratorMapper
 import com.example.demo.service.AdministratorsService
 import com.example.demo.dto.AdministratorUpdateRequest
+import com.example.demo.dto.AdministratorCreateRequest
 import com.example.demo.exception.BadRequestExeption
 import io.mockk.*
 import org.springframework.boot.test.context.SpringBootTest
@@ -88,10 +89,50 @@ class AdministratorsServicetTest {
 
     /**
      * 管理者情報の登録
-     * @param 
-     * @param 
+     * @param request  新規登録情報
+     * @param expected 新規登録する情報をAdministratorに格納
+     * @param result   新規登録された情報
     */
+    fun `administrator insert Test - success`() {
+        val request = AdministratorCreateRequest("初心者管理者", "new_admin@example.com", "newadmin")
 
+        // eq(...) を使って引数を一致させる方法
+        val expected = Administrator(
+            name = request.name,
+            mailAddress = request.mailAddress,
+            password = request.password
+        )
+
+        every { administratorMapper.insert(any()) } returns 1
+
+        val result = administratorsService.insert(request)
+
+        verify { administratorMapper.insert(eq(expected)) }
+
+        assertEquals("初心者管理者", result.name) 
+
+        /**
+         * slot<Administrator>()
+         * io.mockkパッケージから提供されているSlot<T>型のインスタンスを作る関数
+         * MockKのユーティリティ,引数をキャプチャするための変数を作る
+         */
+        // val slot = slot<Administrator>() 
+        //                                    
+        // every { administratorMapper.insert(capture(slot)) } returns 1
+
+        // administratorsService.insert(request)
+
+        // verify { administratorMapper.insert(slot.captured) }
+
+        // assertEquals("初心者管理者", slot.captured.name)
+        // assertEquals("new_admin@example.com", slot.captured.mailAddress)
+        // assertEquals("newadmin", slot.captured.password)
+    }
+
+    /**
+     * 管理者削除
+     * 
+     */
 
     /**
      * 管理者情報の更新 - 成功
