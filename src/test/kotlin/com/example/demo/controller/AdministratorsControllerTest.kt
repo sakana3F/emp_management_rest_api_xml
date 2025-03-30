@@ -97,7 +97,10 @@ class AdministratorsControllerTest {
            }
         """
 
-    // 管理者一覧取得 - 管理者一覧の取得に成功(200)
+    /**
+     * 管理者一覧取得 - 管理者一覧の取得に成功(200)
+     * @param result 取得される管理者一覧
+    */ 
     @Test
     fun `GET administratorsList test - success`() {
 
@@ -114,7 +117,10 @@ class AdministratorsControllerTest {
             }
     }
 
-    // 管理者一覧取得 - 管理者情報取得に成功(200)
+    /**
+     * 管理者一覧取得 - 管理者情報取得に成功(200)
+     * @param result id=1の検索で返されるはずの管理者情報
+     */ 
     @Test
     fun `administratorsFindById test - success`() {
         val result = listOf(
@@ -162,28 +168,32 @@ class AdministratorsControllerTest {
     //         }
     // }
 
-    // 管理者登録 - 新規管理者の登録成功(200)
+    /**
+     * 管理者登録 - 新規管理者の登録成功(200)
+     * @param request    登録したい情報
+     * @param registered 登録された情報
+     */
     @Test
     fun `administratorCreate - success`() {
-        val request = AdministratorCreateRequest("管理者三四郎", "testadmin@example.com", "testtest34")
-        val registered = Administrator(3, "管理者三四郎", "testadmin@example.com", "testtest34")
+        val request = AdministratorCreateRequest("初心者管理者", "new_admin@example.com", "newadmin")
+        val registered = Administrator(4, "初心者管理者", "new_admin@example.com", "newadmin")
 
         every { administratorsService.insert(request) } returns registered
 
         val jsonRequest: String = """
             {    
-                "name": "管理者三四郎",
-                "mailAddress": "testadmin@example.com",
-                "password": "testtest34"
+                "name": "初心者管理者",
+                "mailAddress": "new_admin@example.com",
+                "password": "newadmin"
             }
         """
 
         val expectationsJson: String = """
             {    
-                "id": 3,
-                "name": "管理者三四郎",
-                "mailAddress": "testadmin@example.com",
-                "password": "testtest34"
+                "id": 4,
+                "name": "初心者管理者",
+                "mailAddress": "new_admin@example.com",
+                "password": "newadmin"
             }
         """
 
@@ -224,10 +234,10 @@ class AdministratorsControllerTest {
     // 管理者削除 - 削除成功 (レスポンスボディなし)
     @Test
     fun`administratorsDelete - success`() {
-        every{ administratorsService.delete(3) } returns 1
+        every{ administratorsService.delete(2) } returns 1
 
         mockMvc.perform(
-            delete("/administrators/3"))
+            delete("/administrators/2"))
             .andExpect(
                 status().isNoContent() // 削除成功・返すボディなし(204)
             )
@@ -235,8 +245,9 @@ class AdministratorsControllerTest {
 
     /**
      * 管理者更新 - 成功(200)
-     * 
-     *  */ 
+     * @param request  更新したい情報
+     * @param effected 更新後の情報
+     */ 
     @Test
     fun`administratorUpdate - success`() {
 

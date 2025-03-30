@@ -15,7 +15,7 @@
     <!-- 管理者登録 -->
     <insert id="insert" parameterType="com.example.demo.entity.Administrator" useGeneratedKeys="true" keyProperty="id">
         insert into administrators (name, mail_address, password) values (#{name}, #{mailAddress}, #{password})
-        returning id
+        <!-- returning id -->
     </insert>
     <!-- 管理者削除 -->
     <delete id="delete" parameterType="Int">

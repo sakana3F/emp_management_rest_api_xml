@@ -2,10 +2,10 @@
 Get http://localhost:8080/administrators HTTP/1.1
 
 ### 管理者id検索
-GET http://localhost:8080/administrators/3 HTTP/1.1
+GET http://localhost:8080/administrators/2 HTTP/1.1
 
 ### 例外
-GET http://localhost:8080/administrators/5 HTTP/1.1
+GET http://localhost:8080/administrators/10 HTTP/1.1
 
 ### 管理者登録
 POST  http://localhost:8080/administrators HTTP/1.1
