@@ -118,7 +118,7 @@ class AdministratorsControllerTest {
     }
 
     /**
-     * 管理者一覧取得 - 管理者情報取得に成功(200)
+     * id検索で管理者取得 - 管理者情報取得に成功(200)
      * @param result id=1の検索で返されるはずの管理者情報
      */ 
     @Test

@@ -4,6 +4,7 @@ import com.example.demo.entity.Administrator
 import com.example.demo.mapper.AdministratorMapper
 import com.example.demo.service.AdministratorsService
 import com.example.demo.dto.AdministratorUpdateRequest
+import com.example.demo.exception.BadRequestExeption
 import io.mockk.*
 import org.springframework.boot.test.context.SpringBootTest
 import com.ninjasquad.springmockk.MockkBean
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.jdbc.Sql
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.assertj.core.api.Assertions.assertThat
 import kotlin.test.assertEquals
 
@@ -30,11 +32,10 @@ class AdministratorsServicetTest {
     private lateinit var administratorsService: AdministratorsService
 
     /**
-     * 管理者情報一覧
+     * 管理者情報一覧 - 成功
      * @param expectationsList 期待される管理者一覧
      * @param resultList       返される管理者一覧
      */
-
     @Test
     fun `administrators findAll Test - success`() {
         val expectationsList = listOf(
@@ -59,11 +60,41 @@ class AdministratorsServicetTest {
     }
 
     /**
-     * 
+     * 管理者のid検索 - 成功
+     * @param expect   id=1で期待する管理者情報
+     * @param expected id=1で期待される管理者情報
      */
+    fun `administrator findById Test - success`() {
+        val expect = Administrator(1, "管理者太郎", "admin@sample.com", "testtest")
+        every { administratorMapper.findById(1) } returns expect
+
+        val expected = administratorsService.findById(1)
+        assertThat(expected).isEqualTo(expect)
+    }
 
     /**
-     * 管理者情報の更新
+     * id検索で管理者情報取得 - idがないとき
+     * @param exception idなし(null)
+     */
+    @Test
+    fun `administrators findAll Test - exception_not found`() {
+        val id = 99
+        every { administratorMapper.findById(99) } returns null
+        val exception = assertThrows<NoSuchElementException> {
+            administratorsService.findById(99)
+        }
+        assertEquals("指定IDの管理者が見つからない(id=$id)", exception.message)
+    }
+
+    /**
+     * 管理者情報の登録
+     * @param 
+     * @param 
+    */
+
+
+    /**
+     * 管理者情報の更新 - 成功
      * @param effect   更新する管理者情報
      * @param effected 更新後の管理者情報
      * @return         更新件数
