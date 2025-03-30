@@ -131,8 +131,16 @@ class AdministratorsServicetTest {
 
     /**
      * 管理者削除
-     * 
+     * @param result id=2の管理者削除
      */
+    @Test
+    fun `administrator delete Test - success`() {
+        every { administratorMapper.delete(2) } returns 1
+
+        val result = administratorsService.delete(2)
+
+        assertEquals(2, result)
+    }
 
     /**
      * 管理者情報の更新 - 成功
