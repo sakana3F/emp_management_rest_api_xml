@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.jdbc.Sql
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
+import kotlin.test.assertEquals
 
 
 @ActiveProfiles("test")
@@ -27,6 +28,39 @@ class AdministratorsServicetTest {
 
     @Autowired
     private lateinit var administratorsService: AdministratorsService
+
+    /**
+     * 管理者情報一覧
+     * @param expectationsList 期待される管理者一覧
+     * @param resultList       返される管理者一覧
+     */
+
+    @Test
+    fun `administrators findAll Test - success`() {
+        val expectationsList = listOf(
+            Administrator(1, "管理者太郎", "admin@sample.com", "testtest"),
+            Administrator(2, "管理者次郎", "jiro-admin@sample.com", "jiro-test")
+        )
+        every { administratorMapper.findAll() } returns expectationsList
+
+        val resultList = administratorsService.findAll()
+
+        assertThat(resultList).hasSize(2)
+        // assertThat(resultList).isEqualTo(expectationsList) // List全体をまとめて確認
+
+        // id=1
+        assertThat(resultList[0].name).isEqualTo("管理者太郎")
+        assertThat(resultList[0].mailAddress).isEqualTo("admin@sample.com")
+        assertThat(resultList[0].password).isEqualTo("testtest")
+        // id=2
+        assertThat(resultList[1].name).isEqualTo("管理者次郎")
+        assertThat(resultList[1].mailAddress).isEqualTo("jiro-admin@sample.com")
+        assertThat(resultList[1].password).isEqualTo("jiro-test")
+    }
+
+    /**
+     * 
+     */
 
     /**
      * 管理者情報の更新
